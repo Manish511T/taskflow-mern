@@ -1,20 +1,45 @@
+import { useEffect, useState } from "react";
+import { getProjects } from "../services/projectService";
 import { removeToken } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import CreateProject from "../components/CreateProject";
+import ProjectList from "../components/ProjectList";
 
 const Dashboard = () => {
-    const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-        removeToken();
-        navigate("/login");
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await getProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    return (
-        <div>
-            <h1>Dashboard</h1>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
-    )
-}
+    fetchProjects();
+  }, []);
+
+  const handleLogout = () => {
+    removeToken();
+    navigate("/login");
+  };
+
+  const handleProjectCreated = (project) => {
+    setProjects((prev) => [...prev, project]);
+  };
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <button onClick={handleLogout}>Logout</button>
+
+      <CreateProject onProjectCreated={handleProjectCreated} />
+      <ProjectList projects={projects} />
+    </div>
+  );
+};
 
 export default Dashboard;
