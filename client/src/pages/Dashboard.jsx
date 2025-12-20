@@ -27,9 +27,10 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  const handleProjectCreated = (project) => {
-    setProjects((prev) => [...prev, project]);
-  };
+const handleProjectCreated = async () => {
+  const data = await getProjects();
+  setProjects(data);
+};
 
   return (
     <div>

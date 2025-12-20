@@ -15,10 +15,14 @@ const CreateProject = ({ onProjectCreated }) => {
             onProjectCreated(newProject);
             setName("");
             setDescription("");
+
+            console.log("create project:", newProject);
         } catch (error) {
             setError(error.message);
         }
     };
+
+
 
     return (
         <div>
