@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTasksByList } from "../services/projectService";
+import { getTasksBylist } from "../services/taskService";
 import TaskCard from "./TaskCard";
 import CreateTask from "./CreateTask";
 
@@ -7,7 +7,7 @@ const ListColumn = ({ list }) => {
   const [tasks, setTasks] = useState([]);
 
   const loadTasks = async () => {
-    const data = await getTasksByList(list._id);
+    const data = await getTasksBylist(list._id);
     setTasks(data);
   };
 
