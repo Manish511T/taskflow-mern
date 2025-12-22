@@ -14,7 +14,7 @@ export const getTasksBylist = async (listId)=>{
     return res.json();
 };
 
-export const createTask = async(listId)=>{
+export const createTask = async(listId,task)=>{
     const res = await fetch(`${API_URL}/${listId}/tasks`,{
         method: "POST",
         headers:{
