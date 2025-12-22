@@ -9,7 +9,7 @@ const ProjectDetail = () => {
   const [lists, setLists] = useState([]);
 
   const loadLists = async () => {
-    const data = await getListsByProject(projectId);
+    const data = await getListByProject(projectId);
     setLists(data);
   };
 
