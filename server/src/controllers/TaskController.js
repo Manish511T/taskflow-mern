@@ -91,7 +91,6 @@ export const updateTask = async (req, res) => {
 export const deleteTask = async (req, res)=>{
     try{
         const { taskId } = req.params;
-        const { title, description, status } = req.body;
 
         const task = await Task.findById(taskId);
         if (!task) {
