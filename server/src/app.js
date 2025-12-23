@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/projects", listRoutes);
-app.use("/api/projects", taskRoutes);
+app.use("/api/lists", taskRoutes);
 
 app.get("/", (req, res)=>{
     res.send("TaskFlow API is running");

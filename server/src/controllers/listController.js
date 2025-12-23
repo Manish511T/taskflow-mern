@@ -1,5 +1,5 @@
-import List from "../models/List";
-import checkProjectOwnership from "../utils/checkProjectOwnership";
+import List from "../models/List.js";
+import checkProjectOwnership from "../utils/checkProjectOwnership.js";
 
 // create list in project
 

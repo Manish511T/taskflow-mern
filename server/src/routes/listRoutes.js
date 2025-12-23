@@ -8,6 +8,6 @@ import {
 const router = express.Router();
 
 router.post("/:projectId/lists", authmiddleware, createList);
-router.getE("/:projectId/lists", authmiddleware, getListByProject);
+router.get("/:projectId/lists", authmiddleware, getListByProject);
 
 export default router;
