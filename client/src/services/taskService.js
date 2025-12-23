@@ -30,7 +30,7 @@ export const createTask = async(listId,task)=>{
 };
 
 export const updateTask = async(taskId, updates)=>{
-    const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`,{
+    const res = await fetch(`${API_URL}/tasks/${taskId}`,{
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -44,12 +44,23 @@ export const updateTask = async(taskId, updates)=>{
 };
 
 
-export const deleteTask = async(taskId)=>{
-    const res = await fetch(`http://localhost:5000/api/tasks/${taskId}`,{
+// export const deleteTask = async(taskId)=>{
+//     const res = await fetch(`${API_URL}/tasks/${taskId}`,{
+//         method: "DELETE",
+//         headers: {
+//             Authorization: `Bearer ${getToken()}`
+//         },
+//     });
+
+//     if(!res.ok) throw new Error("Failed to delete task")
+// }
+
+export const deleteTask = async (taskId)=>{
+    const res = await fetch(`${API_URL}/tasks/${taskId}`,{
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${getToken()}`
-        },
+        }
     });
 
     if(!res.ok) throw new Error("Failed to delete task")
