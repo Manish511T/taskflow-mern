@@ -43,18 +43,6 @@ export const updateTask = async(taskId, updates)=>{
     return res.json();
 };
 
-
-// export const deleteTask = async(taskId)=>{
-//     const res = await fetch(`${API_URL}/tasks/${taskId}`,{
-//         method: "DELETE",
-//         headers: {
-//             Authorization: `Bearer ${getToken()}`
-//         },
-//     });
-
-//     if(!res.ok) throw new Error("Failed to delete task")
-// }
-
 export const deleteTask = async (taskId)=>{
     const res = await fetch(`${API_URL}/tasks/${taskId}`,{
         method: "DELETE",

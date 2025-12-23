@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getListByProject } from "../services/listService";
 import ListColumn from "../components/ListColumn";
 import CreateList from "../components/CreateList";
@@ -8,14 +8,14 @@ const ProjectDetail = () => {
   const { projectId } = useParams();
   const [lists, setLists] = useState([]);
 
-  const loadLists = async () => {
+  const loadLists = useCallback(async () => {
     const data = await getListByProject(projectId);
     setLists(data);
-  };
+  }, [projectId]);
 
   useEffect(() => {
     loadLists();
-  }, [projectId]);
+  }, [loadLists]);
 
   return (
     <div>
