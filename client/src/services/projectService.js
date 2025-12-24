@@ -1,6 +1,6 @@
 import {getToken} from "../utils/auth";
 
-const API_URL = "http://localhost:5000/api/projects";
+const API_URL = "https://taskflow-mern-0i3t.onrender.com/api/projects";
 
 export const getProjects = async ()=>{
     const response = await fetch(API_URL, {

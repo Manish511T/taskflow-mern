@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "https://taskflow-mern-0i3t.onrender.com/api/auth";
 
 export const login = async (credential) =>{
     const response = await fetch(`${API_URL}/login`,{

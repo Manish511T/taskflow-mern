@@ -1,6 +1,6 @@
 import { getToken } from "../utils/auth";
 
-const API_URL = "http://localhost:5000/api/lists";
+const API_URL = "https://taskflow-mern-0i3t.onrender.com/api/lists";
 
 export const getTasksByList = async (listId)=>{
     const res = await fetch(`${API_URL}/${listId}/tasks`, {
