@@ -2,50 +2,72 @@ import { useState } from "react";
 import { createProject } from "../services/projectService";
 
 const CreateProject = ({ onProjectCreated }) => {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("")
-    const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-        try {
-            const newProject = await createProject({ name, description });
-            onProjectCreated(newProject);
-            setName("");
-            setDescription("");
+    if (!name.trim()) {
+      setError("Project name is required");
+      return;
+    }
 
-            console.log("create project:", newProject);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
+    try {
+      setLoading(true);
+      const newProject = await createProject({
+        name: name.trim(),
+        description: description.trim(),
+      });
 
+      onProjectCreated(newProject);
+      setName("");
+      setDescription("");
+    } catch (err) {
+      setError(err.message || "Failed to create project");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  return (
+    <div className="create-project-card">
+      <h3 className="create-project-title">Create New Project</h3>
 
-    return (
-        <div>
-            <h3>Create Project</h3>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <div className="error-message">{error}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    placeholder="Project name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-
-                <input
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-
-                <button type="submit">Create</button>
-            </form>
+      <form onSubmit={handleSubmit} className="create-project-form">
+        <div className="input-group">
+          <label>Project Name</label>
+          <input
+            type="text"
+            placeholder="e.g. Task Management App"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={loading}
+          />
         </div>
-    )
-}
+
+        <div className="input-group">
+          <label>Description</label>
+          <textarea
+            placeholder="Short description of your project"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={loading}
+            rows={3}
+          />
+        </div>
+
+        <button className="create-btn" type="submit" disabled={loading}>
+          {loading ? "Creating..." : "Create Project"}
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default CreateProject;

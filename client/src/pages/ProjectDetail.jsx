@@ -1,16 +1,25 @@
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import { getListsByProject } from "../services/listService";
 import ListColumn from "../components/ListColumn";
 import CreateList from "../components/CreateList";
 
+
 const ProjectDetail = () => {
   const { projectId } = useParams();
   const [lists, setLists] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadLists = useCallback(async () => {
-    const data = await getListsByProject(projectId);
-    setLists(data);
+    try {
+      setLoading(true);
+      const data = await getListsByProject(projectId);
+      setLists(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }, [projectId]);
 
   useEffect(() => {
@@ -18,16 +27,33 @@ const ProjectDetail = () => {
   }, [loadLists]);
 
   return (
-    <div>
-      <h2>Project Board</h2>
+    <div className="board-container">
+      {/* Header */}
+      <header className="board-header">
+        <h2 className="board-title">Project Board</h2>
+      </header>
 
-      <CreateList projectId={projectId} onCreated={loadLists} />
-
-      <div style={{ display: "flex", gap: "16px" }}>
-        {lists.map(list => (
-          <ListColumn key={list._id} list={list} />
-        ))}
+      {/* Create List */}
+      <div className="create-list-wrapper">
+        <CreateList projectId={projectId} onCreated={loadLists} />
       </div>
+
+      {/* Board */}
+      {loading ? (
+        <p className="loading-text">Loading lists...</p>
+      ) : (
+        <div className="board-columns">
+          {lists.length === 0 ? (
+            <p className="empty-text">
+              No lists yet. Create your first list 🚀
+            </p>
+          ) : (
+            lists.map((list) => (
+              <ListColumn key={list._id} list={list} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };

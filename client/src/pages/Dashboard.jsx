@@ -7,18 +7,22 @@ import ProjectList from "../components/ProjectList";
 
 const Dashboard = () => {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const data = await getProjects();
-        setProjects(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchProjects = async () => {
+    try {
+      setLoading(true);
+      const data = await getProjects();
+      setProjects(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchProjects();
   }, []);
 
@@ -27,18 +31,32 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-const handleProjectCreated = async () => {
-  const data = await getProjects();
-  setProjects(data);
-};
-
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="dashboard-container">
+      {/* Header */}
+      <header className="dashboard-header">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </header>
 
-      <CreateProject onProjectCreated={handleProjectCreated} />
-      <ProjectList projects={projects} />
+      {/* Content */}
+      <div className="dashboard-content">
+        <section className="create-project-section">
+          <CreateProject onProjectCreated={fetchProjects} />
+        </section>
+
+        <section className="project-list-section">
+          <h2 className="section-title">Your Projects</h2>
+
+          {loading ? (
+            <p className="loading-text">Loading projects...</p>
+          ) : (
+            <ProjectList projects={projects} />
+          )}
+        </section>
+      </div>
     </div>
   );
 };

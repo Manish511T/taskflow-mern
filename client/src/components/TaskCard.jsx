@@ -1,27 +1,50 @@
 import { updateTask, deleteTask } from "../services/taskService";
+import { useState } from "react";
+
 
 const TaskCard = ({ task, onUpdated }) => {
+  const [updating, setUpdating] = useState(false);
+
   const changeStatus = async (e) => {
+    setUpdating(true);
     await updateTask(task._id, { status: e.target.value });
+    setUpdating(false);
     onUpdated();
   };
 
   const remove = async () => {
+    if (!window.confirm("Delete this task?")) return;
     await deleteTask(task._id);
     onUpdated();
   };
 
   return (
-    <div style={{ border: "1px solid #ddd", padding: 6, marginBottom: 6 }}>
-      <div>{task.title}</div>
+    <div className={`task-card ${updating ? "updating" : ""}`}>
+      <div className="task-top">
+        <p className="task-title" title={task.title}>
+          {task.title}
+        </p>
 
-      <select value={task.status} onChange={changeStatus}>
-        <option value="todo">Todo</option>
-        <option value="in-progress">In Progress</option>
-        <option value="done">Done</option>
-      </select>
+        <button
+          className="icon-btn danger"
+          onClick={remove}
+          aria-label="Delete task"
+        >
+          ✕
+        </button>
+      </div>
 
-      <button onClick={remove}>🗑</button>
+      <div className="task-footer">
+        <select
+          className={`status-pill ${task.status}`}
+          value={task.status}
+          onChange={changeStatus}
+        >
+          <option value="todo">Todo</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
     </div>
   );
 };

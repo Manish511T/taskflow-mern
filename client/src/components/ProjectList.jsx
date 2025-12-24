@@ -1,21 +1,31 @@
 import { Link } from "react-router-dom";
 
+
 const ProjectList = ({ projects }) => {
-  if (projects.length === 0) {
-    return <p>No projects yet</p>;
+  if (!projects || projects.length === 0) {
+    return (
+      <div className="empty-projects">
+        <p>No projects yet</p>
+        <span>Create your first project to get started 🚀</span>
+      </div>
+    );
   }
 
   return (
-    <ul>
+    <div className="project-grid">
       {projects.map((project) => (
-        <li key={project._id}>
-          <Link to={`/projects/${project._id}`}>
-            <strong>{project.name}</strong>
-          </Link>
-          {" "} - {project.description}
-        </li>
+        <Link
+          to={`/projects/${project._id}`}
+          key={project._id}
+          className="project-card"
+        >
+          <h3 className="project-name">{project.name}</h3>
+          <p className="project-description">
+            {project.description || "No description provided"}
+          </p>
+        </Link>
       ))}
-    </ul>
+    </div>
   );
 };
 
