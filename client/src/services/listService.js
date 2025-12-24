@@ -2,7 +2,7 @@ import {getToken} from "../utils/auth";
 
 const API_URL = "http://localhost:5000/api/projects";
 
-export const getListByProject = async (projectId)=>{
+export const getListsByProject = async (projectId)=>{
     const res = await fetch(`${API_URL}/${projectId}/lists`, {
         headers:{
             Authorization: `Bearer ${getToken()}`

@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
-import { getListByProject } from "../services/listService";
+import { getListsByProject } from "../services/listService";
 import ListColumn from "../components/ListColumn";
 import CreateList from "../components/CreateList";
 
@@ -9,7 +9,7 @@ const ProjectDetail = () => {
   const [lists, setLists] = useState([]);
 
   const loadLists = useCallback(async () => {
-    const data = await getListByProject(projectId);
+    const data = await getListsByProject(projectId);
     setLists(data);
   }, [projectId]);
 
