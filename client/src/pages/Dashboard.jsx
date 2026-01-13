@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     removeToken();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
