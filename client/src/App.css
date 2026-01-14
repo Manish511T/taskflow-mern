@@ -108,11 +108,39 @@
   }
 }
 
+/* registration */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.auth-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.auth-link {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+
 
 /* Page Layout */
 .dashboard-container {
   min-height: 100vh;
-  background: #f4f6f8;
+  background: #90b8df;
   padding: 24px;
 }
 
@@ -320,13 +348,14 @@
 .project-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  background-color: #97caff;
 }
 
 /* Text */
 .project-name {
   font-size: 16px;
   font-weight: 700;
-  color: #333;
+  color: #000000;
   margin-bottom: 6px;
 }
 

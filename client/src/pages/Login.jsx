@@ -3,6 +3,7 @@ import { login } from "../services/authService";
 import { setToken } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +62,17 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        <p className="auth-footer">
+          Don't have an account?{" "}
+          <span
+            className="auth-link"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </span>
+        </p>
       </div>
     </div>
   );
